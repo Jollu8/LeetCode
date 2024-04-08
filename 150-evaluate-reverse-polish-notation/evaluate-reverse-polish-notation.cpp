@@ -2,23 +2,23 @@
 #define PB push_back
 
 class Solution {
-    static int calc(int b, int a, const char op) {
-        switch (op) {
-            case '+': return b + a;
-            case '-': return b - a;
-            case '*': return b * a;
-        }
-        return b / a;
-    }
+
+    const std::unordered_map<char, std::function<int(int, int)>> ops{
+        {'+', std::plus<>()},
+        {'-', std::minus<>()},
+        {'*', std::multiplies<>()},
+        {'/', std::divides<>()}};
+
 public:
-    int evalRPN(vector<string> &t) {
+    int evalRPN(vector<string>& t) {
         vector<int> st;
-        for (auto i: t) {
+        for (auto i : t) {
             if (i == "+" || i == "-" || i == "*" || i == "/") {
-                int result = calc(st[st.S - 2], st[st.S - 1], i.back());
+                int result = ops.at(i.back())(st[st.S - 2], st[st.S - 1]);
                 st.resize(st.S - 2);
                 st.PB(result);
-            } else st.PB(stoi(i));
+            } else
+                st.PB(stoi(i));
         }
         return st.back();
     }

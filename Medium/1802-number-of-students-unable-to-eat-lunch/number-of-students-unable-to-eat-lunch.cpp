@@ -1,4 +1,3 @@
-#pragma GCC optimize("O3", "unroll-loops")
 class Solution {
 public:
     int countStudents(vector<int>& a, vector<int>& b) {

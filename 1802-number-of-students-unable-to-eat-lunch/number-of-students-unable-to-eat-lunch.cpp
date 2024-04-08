@@ -1,4 +1,3 @@
-#include <algorithm>
 
 class Solution {
 public:
@@ -6,14 +5,16 @@ public:
         int circular = count(students.begin(), students.end(), 0);
         int square = students.size() - circular;
 
-        for (auto sandwich : sandwiches) {
-            if (sandwich && --square < 0) {
-                return circular;
-            } else if (!sandwich && --circular < 0) {
-                return square;
-            }
-        }
+        auto it =
+            find_if(sandwiches.begin(), sandwiches.end(), [&](int sandwich) {
+                if (sandwich && --square < 0) {
+                    return true;
+                } else if (!sandwich && --circular < 0) {
+                    return true;
+                }
+                return false;
+            });
 
-        return 0;
+        return it != sandwiches.end() ? distance(it, sandwiches.end()) : 0;
     }
 };

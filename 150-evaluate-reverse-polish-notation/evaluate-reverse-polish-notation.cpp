@@ -2,23 +2,23 @@
 #define PB push_back
 
 class Solution {
-
-    const std::unordered_map<char, std::function<int(int, int)>> ops{
-            {'+', std::plus<>()},
-            {'-', std::minus<>()},
-            {'*', std::multiplies<>()},
-            {'/', std::divides<>()}};
-
 public:
     int evalRPN(vector<string>& t) {
         vector<int> st;
+        unordered_map<char, function<int(int, int)>> ops {
+                {'+', [](int a, int b) { return a + b; }},
+                {'-', [](int a, int b) { return a - b; }},
+                {'*', [](int a, int b) { return a * b; }},
+                {'/', [](int a, int b) { return a / b; }}
+        };
         for (auto i : t) {
-            if (ops.contains(i.back())) {
-                int result = ops.at(i.back())(st[st.S - 2], st[st.S - 1]);
-                st.resize(st.S - 2);
-                st.PB(result);
-            } else
+            if (ops.count(i.back())) {
+                int a = st.back(); st.pop_back();
+                int b = st.back(); st.pop_back();
+                st.PB(ops[i.back()](b, a));
+            } else {
                 st.PB(stoi(i));
+            }
         }
         return st.back();
     }

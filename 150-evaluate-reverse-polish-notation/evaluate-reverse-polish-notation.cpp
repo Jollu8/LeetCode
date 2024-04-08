@@ -4,16 +4,16 @@
 class Solution {
 
     const std::unordered_map<char, std::function<int(int, int)>> ops{
-        {'+', std::plus<>()},
-        {'-', std::minus<>()},
-        {'*', std::multiplies<>()},
-        {'/', std::divides<>()}};
+            {'+', std::plus<>()},
+            {'-', std::minus<>()},
+            {'*', std::multiplies<>()},
+            {'/', std::divides<>()}};
 
 public:
     int evalRPN(vector<string>& t) {
         vector<int> st;
         for (auto i : t) {
-            if (i == "+" || i == "-" || i == "*" || i == "/") {
+            if (ops.contains(i.back())) {
                 int result = ops.at(i.back())(st[st.S - 2], st[st.S - 1]);
                 st.resize(st.S - 2);
                 st.PB(result);

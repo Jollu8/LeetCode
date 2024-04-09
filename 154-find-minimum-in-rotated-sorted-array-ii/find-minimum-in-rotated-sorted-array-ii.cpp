@@ -1,17 +1,13 @@
 class Solution {
 public:
-    int findMin(vector<int> &n) {
-        int l = 0, r = n.size() - 1;
-        while (l < r) {
+    int findMin(vector<int>& n) {
+        int l = 0;
+        for (int r = n.size() - 1; l < r;) {
             int m = l + (r - l) / 2;
-            if (n[m] > n[r]) {
-                l = m + 1;
-            } else if (n[m] < n[r]) {
-                r = m;
-            } else {
-                r--;
-            }
+            l = (n[m] > n[r]) ? m + 1 : l;
+            r = (n[m] < n[r]) ? m : (n[m] == n[r]) ? r - 1 : r;
         }
+
         return n[l];
     }
 };

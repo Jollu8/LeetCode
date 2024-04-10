@@ -10,27 +10,43 @@
  * right(right) {}
  * };
  */
+
+// vector<int> inorderTraversal(TreeNode* r) {
+//     if (!r)
+//         return {};
+//     vector<int> ans;
+//     stack<TreeNode*> q;
+
+//     TreeNode* cur = r;
+//     while (r || !q.empty()) {
+
+//         while (cur) {
+//             q.push(cur);
+//             cur = cur->left;
+//         }
+
+//         cur = q.top();
+//         q.pop();
+//         ans.push_back(cur->val);
+//         cur = cur->right;
+//     }
+//     return ans;
+// }
 class Solution {
+    void rec_iner(TreeNode*r, vector<int> &ans){
+        if(!r) return ;
+
+        rec_iner(r->left, ans);
+        ans.push_back(r->val);
+        rec_iner(r->right, ans);
+    }
 public:
     vector<int> inorderTraversal(TreeNode* r) {
         if (!r)
             return {};
         vector<int> ans;
-        stack<TreeNode*> q;
-  
-        TreeNode* cur = r;
-        while (cur || !q.empty()) {
-           
-            while (cur ) {
-                q.push(cur);
-                cur = cur->left;
-            }
+        rec_iner(r, ans);
 
-            cur = q.top();
-            q.pop();
-            ans.push_back(cur->val);
-            cur = cur->right;
-        }
         return ans;
     }
 };

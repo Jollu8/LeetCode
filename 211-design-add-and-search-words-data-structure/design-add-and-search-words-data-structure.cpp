@@ -1,11 +1,12 @@
 class WordDictionary {
     struct trie {
         bool has = false;
-        unordered_map<char, trie *> ch;
+        unordered_map<char, std::unique_ptr<trie >> ch;
 
-    } *root;
+    };
+    std::unique_ptr<trie> root;
 
-    bool s_dfs(trie *r, string &w, int i) {
+    bool s_dfs(unique_ptr<trie> &r, string &w, int i) {
         if (i == w.size()) return r->has;
 
         auto c = w[i];
@@ -19,14 +20,14 @@ class WordDictionary {
 
 public:
     WordDictionary() {
-        root = new trie;
+        root = make_unique<trie>(new trie());
     }
 
     void addWord(string word) {
-        auto tmp = root;
+        auto tmp = root.get();
         for (auto a: word) {
-            if (!tmp->ch[a]) { tmp->ch[a] = new trie(); }
-            tmp = tmp->ch[a];
+            if (!tmp->ch[a]) { tmp->ch[a] = make_unique<trie>(trie()); }
+            tmp = tmp->ch[a].get();
         }
         tmp->has = true;
     }

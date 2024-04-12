@@ -18,21 +18,38 @@ public:
 };
 */
 
+// vector<int> preorder(Node* root) {
+// if (!root)
+//     return {};
+// vector<int> ans;
+// stack<Node*> stk;
+// stk.push(root);
+
+// while (!stk.empty()) {
+//     auto tmp = stk.top();
+//     ans.push_back(tmp->val);
+//     stk.pop();
+
+//     for (auto it = tmp->children.rbegin(); it != tmp->children.rend();
+//          ++it)
+//             stk.push(*it);
+//     }
+//     return ans;
+// }
+
 class Solution {
+    void rec(Node *r, vector<int> &ans) {
+        if(!r) return;
+        ans.push_back(r->val);
+        for(auto &i : r->children) rec(i, ans);
+    }
 public:
-    vector<int> preorder(Node *root) {
-        if(!root) return {};
+    vector<int> preorder(Node* root) {
+        if (!root)
+            return {};
+        
         vector<int> ans;
-        stack<Node *> stk;
-        stk.push(root);
-
-        while (!stk.empty()) {
-            auto tmp = stk.top();
-            ans.push_back(tmp->val);
-            stk.pop();
-
-            for (auto it = tmp->children.rbegin(); it != tmp->children.rend(); ++it) stk.push(*it);
-        }
+        rec(root, ans);
         return ans;
     }
 };

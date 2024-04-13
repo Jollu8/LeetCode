@@ -11,8 +11,8 @@ class Solution {
     }
 public:
     int minCostClimbingStairs(vector<int>& c) {
-        // return dp(c);
-        return min(memo(c, c.size()-1), memo(c, c.size()-2));
+        return dp(c);
+        // return min(memo(c, c.size()-1), memo(c, c.size()-2));
 
     }
 };

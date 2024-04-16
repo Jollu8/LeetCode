@@ -9,7 +9,8 @@ public:
         adj = move(rooms);
         // dfs_rec(0);
         // dfs_iter(0);
-        bfs_iter(0);
+        // bfs_iter(0);
+        bfs_rec(0);
 
         for (int i = 0; i < n; ++i)
             if (!visited[i]) {
@@ -18,6 +19,14 @@ public:
         return true;
     }
 
+    void bfs_rec(int i ) {
+        if(!visited[i]) {
+            visited[i] = true;
+            for(auto v : adj[i]) {
+                if(!visited[v]) bfs_rec(v);
+            }
+        }
+    }
     void  bfs_iter(int i ) {
         queue<int> q;
         q.push(i);

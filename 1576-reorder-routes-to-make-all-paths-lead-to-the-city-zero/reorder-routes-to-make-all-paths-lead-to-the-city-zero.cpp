@@ -12,7 +12,28 @@ public:
             adj->at(v[1]).emplace_back(-v[0]);
         }
 
-        return dfs_rec(0);
+        // return dfs_rec(0);
+        return dfs_iter(0);
+    }
+
+      int dfs_iter(int i) {
+        int ans{};
+        stack<int> st;
+        st.push(i);
+
+        while (!st.empty()) {
+            i = st.top();
+            st.pop();
+            vis->at(abs(i)) = true;
+            for (int v: adj->at(i)) {
+                if (!(vis->at(abs(v)))) {
+                    st.push(abs(v));
+                    if(v > 0) ++ans;
+                }
+            }
+        }
+        return ans;
+
     }
 
     int dfs_rec(int i) {

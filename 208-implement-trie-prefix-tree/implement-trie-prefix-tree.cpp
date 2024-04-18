@@ -1,45 +1,40 @@
-struct TrieNode {
-    std::unordered_map<char, TrieNode*> children;
-    bool isword;
-
-    TrieNode() : isword(false) {}
-};
 
 class Trie {
-    TrieNode *root;
-public:
-    Trie() {root = new TrieNode();}
+    struct node {
+        vector<node*> ch;
+        bool is;
 
-    void insert(string word) {
-        auto tmp = root;
-        for(auto a : word) {
-            int i = a-'a';
-            if(!tmp->children[i]) tmp->children[i] = new TrieNode();
-            tmp = tmp->children[i];
-        }
-        tmp->isword = true;
+        node() : ch(26), is(false) {}
+    };
+
+    node *root;
+public:
+    Trie() {
+        root = new node();
     }
 
-    bool search(string word, bool prefix = false) {
-        auto tmp = root;
-        for(auto a : word) {
-            int i = a-'a';
-            if(!tmp->children.contains(i)) return false;
-            tmp = tmp->children[i];
+    void insert(string word) {
+        auto t = root;
+        for (auto a: word) {
+            int c = a - 'a';
+            if (!t->ch[c]) t->ch[c] = new node();
+            t = t->ch[c];
         }
-        if (!prefix) return tmp->isword;
+        t->is = true;
+    }
+
+    bool search(string word, bool p = false) {
+        auto t = root;
+        for (auto a: word) {
+            int c = a - 'a';
+            if (!t->ch[c]) return false;
+            t = t->ch[c];
+        }
+        if (!p) return t->is;
         return true;
     }
 
-    bool startsWith(string prefix) {
-        return search(std::move(prefix), true);
+    bool startsWith(string p) {
+        return search(std::move(p), true);
     }
 };
-
-/**
- * Your Trie object will be instantiated and called as such:
- * Trie* obj = new Trie();
- * obj->insert(word);
- * bool param_2 = obj->search(word);
- * bool param_3 = obj->startsWith(prefix);
- */

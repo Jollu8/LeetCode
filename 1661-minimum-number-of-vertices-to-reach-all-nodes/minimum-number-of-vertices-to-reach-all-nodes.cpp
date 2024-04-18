@@ -1,3 +1,4 @@
+#pragma GCC optimize("O3")
 class Solution {
     int n;
     vector<vector<int>> edges;
@@ -5,7 +6,7 @@ class Solution {
 
     void degree() {
         vector<int> inDegree(n, 0);
-        for (auto &edge: this->edges)
+        for (auto& edge : this->edges)
             inDegree[edge[1]]++;
 
         for (int i = 0; i < n; ++i)
@@ -14,13 +15,18 @@ class Solution {
     }
 
     void undegree() {
-        vector<bool> seen(n,false);
-        for(auto &v : edges)seen[v[1]] = true;
-        for(int i = 0 ; i < n; ++i) if(!seen[i]) ans.push_back(i);
+        vector<bool> seen(n, false);
+        for (auto& v : edges)
+            seen[v[1]] = true;
+#pragma omp parallel for
+        for (int i = 0; i < n; ++i)
+            if (!seen[i])
+#pragma omp critical
+                ans.push_back(i);
     }
 
 public:
-    vector<int> findSmallestSetOfVertices(int n, vector<vector<int>> &edges) {
+    vector<int> findSmallestSetOfVertices(int n, vector<vector<int>>& edges) {
         this->n = n;
         this->edges = std::move(edges);
         undegree();

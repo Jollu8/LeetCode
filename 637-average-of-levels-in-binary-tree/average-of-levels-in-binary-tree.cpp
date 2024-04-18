@@ -11,23 +11,21 @@
  */
 class Solution {
 public:
-    vector<double> averageOfLevels(TreeNode* root) {
-        vector<double> ans;
-        queue<TreeNode *> q;
+    std::vector<double> averageOfLevels(TreeNode* root) {
+        std::vector<double> ans;
+        std::queue<TreeNode*> q;
         q.push(root);
         while(!q.empty()) {
-            long sum{};
-            int size = q.size();
-            for(int i = 0 ; i < size; ++i) {
-                auto tmp = q.front();
+            std::vector<long> level;
+            std::ranges::generate_n(std::back_inserter(level), q.size(), [&]() {
+                auto node = q.front();
                 q.pop();
-                sum += tmp->val;
-                if(tmp->left) q.push(tmp->left);
-                if(tmp->right)q.push(tmp->right);
-            }
-            ans.push_back(sum/(double)size);
+                if(node->left) q.push(node->left);
+                if(node->right) q.push(node->right);
+                return node->val;
+            });
+            ans.push_back(std::reduce(level.begin(), level.end(), 0.0) / level.size());
         }
         return ans;
-        
     }
 };

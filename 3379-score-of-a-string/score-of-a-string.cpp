@@ -1,11 +1,8 @@
 class Solution {
 public:
     int scoreOfString(string s) {
-        int ans{};
-        for(int i = 0; i < s.size()-1; ++i){
-            ans += abs(s[i] - s[i+1]);
-        }
-        return ans;
-        
+        return std::transform_reduce(s.begin(), s.end()-1, s.begin()+1, 0, std::plus<>(), [](char a, char b) {
+            return abs(a - b);
+        });
     }
 };

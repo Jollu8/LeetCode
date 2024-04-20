@@ -1,12 +1,17 @@
 class Solution {
 public:
-    bool searchMatrix(vector<vector<int>>& matrix, int target) {
-        for (auto& row : matrix) {
-            auto it = std::lower_bound(row.begin(), row.end(), target);
-            if (it != row.end() && *it == target) {
-                return true;
-            }
+    bool searchMatrix(vector<vector<int>>& a, int t) {
+        int n = a[0].size();
+        int l{}, r = a.size()*n;
+
+        while(l < r) {
+            int m = (r+ l)/2;
+            int x = a[m/n][m%n];
+            if(x  < t) l = m+1;
+            else if(x > t) r = m;
+            else return true;
         }
         return false;
+        
     }
 };

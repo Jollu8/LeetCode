@@ -12,15 +12,12 @@ class Solution {
             return x * rec_pow(x, n - 1);
     }
 
-public:
-    double myPow(double x, int nn) {
-        // return rec_pow(x, n);
-        long  n = nn;
+    double brute_rec(double x, long n) {
+
         bool neg = false;
         if (n < 0)neg = n = -n;
-
-
         double ans = 1.;
+
 
         while (n > 0) {
             if (n & 1)
@@ -29,5 +26,21 @@ public:
             n >>= 1;
         }
         return neg ? 1.0 / ans : ans;
+    }
+
+public:
+    double myPow(double x, int nn) {
+      long n = nn;
+        if(n < 0) {
+            x = 1.0 / x;
+            n = -n;
+        }
+        double ans = 1;
+        while(n > 0) {
+            if(n&1) ans *=x;
+            x *= x;
+            n >>=1;
+        }
+        return ans;
     }
 };

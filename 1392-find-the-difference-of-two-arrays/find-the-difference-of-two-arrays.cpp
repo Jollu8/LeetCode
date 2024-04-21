@@ -5,12 +5,8 @@ public:
         set<int> n2(nums2.begin(), nums2.end());
         vector<vector<int>> ans(2);
 
-        for (auto i: n1) {
-            if (!n2.contains(i))ans[0].push_back(i);
-        }
-        for (auto i: n2) {
-            if (!n1.contains(i))ans[1].push_back(i);
-        }
+        set_difference(n1.begin(), n1.end(), n2.begin(), n2.end(), back_inserter(ans[0]));
+        set_difference(n2.begin(), n2.end(), n1.begin(), n1.end(), back_inserter(ans[1]));
         return ans;
     }
 };

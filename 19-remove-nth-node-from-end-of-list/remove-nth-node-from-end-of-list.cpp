@@ -10,22 +10,21 @@
  */
 class Solution {
 public:
-    ListNode *removeNthFromEnd(ListNode *head, int n) {
-    auto *dummy = new ListNode(0);
-        dummy->next = head;
-
-        int count{};
-        auto t = dummy;
-        while (t) {
-            ++count;
-            t = t->next;
+    ListNode* removeNthFromEnd(ListNode* h, int n) {
+        auto ans = new ListNode(0);
+        ans->next = h;
+        int cnt{};
+        auto cur = ans;
+        while(cur){
+            cur = cur->next;
+            ++cnt;
         }
 
-        auto curr = dummy;;
-        for (auto i = 0; i < count - n - 1; i++)
-            curr = curr->next;
-        curr->next = curr->next->next;
-
-        return dummy->next;
+        auto tmp = ans;
+        for(auto i = 0; i < cnt - n -1; ++i) {
+            tmp = tmp->next;
+        }
+        tmp->next = tmp->next->next;
+        return ans->next;
     }
 };

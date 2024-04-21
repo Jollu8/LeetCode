@@ -2,23 +2,19 @@ class Solution {
 public:
     double findMedianSortedArrays(vector<int>& n1, vector<int>& n2) {
         vector<int> buf(n1.size() + n2.size());
-        int i{}, j{}, k{};
-        while (i < n1.size() && j < n2.size()) {
-            if (n1[i] < n2[j])
-                buf[k++] = n1[i++];
-            else
-                buf[k++] = n2[j++];
+        int l{},r{};
+        int index{};
+        while(l < n1.size() && r < n2.size()) {
+            
+            buf[index++] = (n1[l] < n2[r]) ? n1[l++] : n2[r++];
         }
-        while (i < n1.size())
-            buf[k++] = n1[i++];
 
-        while (j < n2.size())
-            buf[k++] = n2[j++];
-       
+        while(l < n1.size()) buf[index++] = n1[l++];
+        while(r < n2.size()) buf[index++] = n2[r++];
 
-        if ((buf.size() & 1))
-            return buf[buf.size() / 2];
-        auto x = buf.size()/2;
-        return (buf[x] + buf[x-1])/2.;
+        int m = buf.size()/2;
+
+        if(buf.size()&1) return buf[m];
+        return (buf[m-1] + buf[m])/(double)2;
     }
 };

@@ -5,14 +5,12 @@ class Solution {
 
     bool dfs_rec(int v){
         vis[v] = true;
-        for(auto i : adj[v]) {
+        for(auto i : adj[v])
             if(!vis[i] && !dfs_rec(i) || ans[i] == -1) return false;
-            // else if(ans[i] == -1) return false;
-        }
+     
         ans[v] = 1;
         return true;
     }
-
 public:
     bool canFinish(int n, vector<vector<int>>& p) {
         adj.assign(n, vector<int>());

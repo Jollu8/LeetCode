@@ -8,26 +8,24 @@ class Solution {
     }
 public:
     
-
-    int distributeCookies(vector<int>& A, int k, int currentPerson = 0, int currentMask = 0) {
+    int distributeCookies(vector<int>& A, int k, int cur_k = 0, int cur_m = 0) {
         vector<vector<int>>dp(7, vector<int>(255));
-        int numCookies = A.size();
-        int limitMask = (1 << numCookies) - 1;
-        if (currentPerson == k - 1) {
-            return maskSum(A, limitMask - currentMask);
-        }
-        if (dp[currentPerson][currentMask] == 0) {
-            dp[currentPerson][currentMask] = INT_MAX;
-            for (int mask_i = 1; mask_i < limitMask; ++mask_i) {
-                if ((mask_i & currentMask) == 0 && bitset<7>(limitMask - mask_i - currentMask).count() >= k - currentPerson - 1) {
-                    int nextPersonMask = currentMask + mask_i;
-                    int currentMaskSum = maskSum(A, mask_i);
-                    dp[currentPerson][currentMask] = min(dp[currentPerson][currentMask],
-                                                         max(distributeCookies(A, k, currentPerson + 1, nextPersonMask), currentMaskSum));
+        int n = A.size();
+        int limit = (1 << n) - 1;
+        if (cur_k == k - 1) return maskSum(A, limit - cur_m);
+
+        if (dp[cur_k][cur_m] == 0) {
+            dp[cur_k][cur_m] = INT_MAX;
+            for (int mask_i = 1; mask_i < limit; ++mask_i) {
+                if ((mask_i & cur_m) == 0 && bitset<7>(limit - mask_i - cur_m).count() >= k - cur_k - 1) {
+                    int next_m = cur_m + mask_i;
+                    int cur_sum_m = maskSum(A, mask_i);
+                    dp[cur_k][cur_m] = min(dp[cur_k][cur_m],
+                                                         max(distributeCookies(A, k, cur_k + 1, next_m), cur_sum_m));
                 }
             }
         }
-        return dp[currentPerson][currentMask];
+        return dp[cur_k][cur_m];
     }
 
 };

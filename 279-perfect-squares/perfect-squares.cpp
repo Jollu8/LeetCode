@@ -1,22 +1,23 @@
 class Solution {
 public:
     int numSquares(int n) {
-          while (n % 4 == 0)
-        n /= 4;
-    if (n % 8 == 7)
-        return 4;
-    int a = -1, b = sqrt(n);
-    n -= b * b;
-    b += b + 1;
-    while (a <= b) {
-        if (n < 0)
-            n += b -= 2;
-        else if (n > 0)
-            n -= a += 2;
-        else
-            return a < 0 ? 1 : 2;
-    }
-    return 3;
-    
+        queue<int> q({n});
+        int ans{};
+
+        while (!q.empty()) {
+            int size = q.size();
+            ans++;
+            while (size--) {
+                int cur = q.front();
+                q.pop();
+                for (int i = 0; i * i <= cur; ++i) {
+                    int sub = cur - i * i;
+                    if (!sub)
+                        return ans;
+                    q.push(sub);
+                }
+            }
+        }
+        return 0;
     }
 };

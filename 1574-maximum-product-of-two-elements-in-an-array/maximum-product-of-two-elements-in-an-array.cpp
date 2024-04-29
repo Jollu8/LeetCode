@@ -1,12 +1,11 @@
 class Solution {
 public:
     int maxProduct(vector<int>& A) {
-        int ans{};
-        for(int i = 0 ; i < A.size()-1; ++i) {
-            for(int j = i+1; j < A.size(); ++j){
-            ans = max(ans, ((A[i]-1) * (A[j]-1)));
-            }
+        int a{}, b{};
+        for(auto i : A){
+            if(i > a) b = exchange(a, i);
+            else b = max(b, i);
         }
-        return ans;
+        return (a-1) * (b-1);
     }
 };

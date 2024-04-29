@@ -1,13 +1,11 @@
 class Solution {
 public:
-    bool checkIfPangram(string sentence) {
+    bool checkIfPangram(string s) {
         uint32_t seen{};
-
-        for (auto c : sentence) {
-            seen |= (1u << (c - 'a'));
-            if (__builtin_expect(__builtin_popcount(seen) == 26, 0))
-                return true;
+        for( auto c : s) {
+            auto i = c-'a';
+            seen = seen | (1 << i);
         }
-        return false;
+        return seen == ((1 << 26) - 1);
     }
 };

@@ -1,9 +1,7 @@
 class Solution {
 public:
     int deleteGreatestValue(vector<vector<int>>& A) {
-        int ans{};
-        for(auto &v : A)
-            sort(v.begin(), v.end());
+        for(auto &v : A)  sort(v.begin(), v.end());
         
         vector<int> buf (A[0].size());
         for(int i = 0 ; i < A.size(); ++i) {

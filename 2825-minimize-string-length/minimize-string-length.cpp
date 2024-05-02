@@ -1,7 +1,8 @@
 class Solution {
 public:
     int minimizedStringLength(string s) {
-        unordered_set<char> u(s.begin(), s.end());
-        return u.size();
+        vector<bool>buf(26);
+        for(auto c: s)buf[c-'a'] =true;
+        return count(buf.begin(), buf.end(), true); 
     }
 };

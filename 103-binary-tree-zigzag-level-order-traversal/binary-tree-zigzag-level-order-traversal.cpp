@@ -11,31 +11,28 @@
  */
 class Solution {
 public:
-    vector<vector<int>> zigzagLevelOrder(TreeNode *root) {
-        if(!root) return {};
-        std::vector<vector<int>> ans;
-        std::queue<TreeNode *> q;
-        q.push(root);
-        int n{};
-        while (!q.empty()) {
-            std::vector<int> level;
-            std::ranges::generate_n(std::back_inserter(level), q.size(), [&]() {
-                auto tmp = q.front();
+    vector<vector<int>> zigzagLevelOrder(TreeNode* r) {
+        vector<vector<int>> ans;
+        if(!r) return ans;
+        vector<int> row;
+        queue<TreeNode*> q;
+        int x{};
+        q.push(r);
+        while(!q.empty()) {
+            int size = q.size();
+            for(int i = 0; i < size; ++i) {
+                auto cur = q.front();
                 q.pop();
-                if (tmp->left) q.push(tmp->left);
-                if (tmp->right) q.push(tmp->right);
-                return tmp->val;
-            });
-            if (!(n&1)){
-                ++n;
-                ans.emplace_back(level);
+                row.push_back(cur->val);
+                if(cur->left)q.push(cur->left);
+                if(cur->right) q.push(cur->right);
             }
+            if(!(x&1)) ans.emplace_back(move(row));
             else {
-                ++n;
-                reverse(level.begin(), level.end());
-                ans.emplace_back(level);
+                reverse(row.begin(), row.end());
+                ans.emplace_back(move(row));
             }
-
+            ++x;
         }
         return ans;
     }

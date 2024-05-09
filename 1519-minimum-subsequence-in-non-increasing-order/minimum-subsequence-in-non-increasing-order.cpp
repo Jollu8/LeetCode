@@ -1,19 +1,15 @@
 class Solution {
 public:
-    vector<int> minSubsequence(vector<int>& A) {
-        sort(A.begin(), A.end(), [](auto a, auto b) {return a > b;});
-        auto m = accumulate(A.begin(), A.end(), 0);
-        vector<int>ans;
-        int cnt = A[0];
-        m -= A[0];
-        ans.push_back(cnt);
+    vector<int> minSubsequence(vector<int> &A) {
+        // multiset<int, greater<>> seen(A.begin(), A.end());
+        priority_queue<int> seen(A.begin(), A.end());
+        int cnt{}, m = accumulate(A.begin(), A.end(), 0) / 2;
+        vector<int> ans;
 
-        for(int i = 1 ; i < A.size() && cnt <= m; ++i) {
-            cnt += A[i];
-            ans.push_back(A[i]);
-            m -= A[i];
+        while (cnt <= m){
+            ans.push_back(seen.top()), seen.pop();
+            cnt += ans.back();
         }
-
         return ans;
     }
 };

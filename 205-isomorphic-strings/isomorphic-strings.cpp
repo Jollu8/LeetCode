@@ -1,8 +1,8 @@
 class Solution {
 public:
     bool isIsomorphic(string s, string t) {
-        vector<int> A(159);
-        vector<int> B(159);
+        vector<int> A(129);
+        vector<int> B(129);
         int n = s.size();
 
         for (int i = 0; i < n; ++i) {

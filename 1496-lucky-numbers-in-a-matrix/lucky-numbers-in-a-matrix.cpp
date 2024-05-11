@@ -1,32 +1,33 @@
 class Solution {
 public:
-    vector<int> luckyNumbers (vector<vector<int>>& matrix) {
-        vector<int> res;
-        vector<int> row(matrix.size(),0);// store min in row(i)
-        vector<int> col(matrix[0].size(),0);// store max in col(j)
-        for(int i=0;i<matrix.size();i++)
-        {
-            int m=matrix[i][0];
-            for(int j=1;j<matrix[0].size();j++)
-                m=min(m,matrix[i][j]);
-            row[i]=m;
-        }
-        for(int j=0;j<matrix[0].size();j++)
-        {
-            int m=matrix[0][j];
-            for(int i=1;i<matrix.size();i++)
-                m=max(m,matrix[i][j]);
-            col[j]=m;
-        }
-        
-        for(int i=0;i<matrix.size();i++)
-        {
-            for(int j=0;j<matrix[0].size();j++)
-            {
-                if(row[i]==col[j])// if min of row(i) == max of col(j) 
-                    res.push_back(row[i]);
+    vector<int> luckyNumbers(vector<vector<int>>& matrix) {
+        int m = matrix.size();
+        int n = matrix[0].size();
+        vector<int> v;
+
+        for (int i = 0; i < m; i++) {
+            int min = INT_MAX;
+            int x1 = 0;
+            for (int j = 0; j < n; j++) {
+                if (min > matrix[i][j]) {
+                    min = matrix[i][j];
+                    x1 = j;
+                }
+            }
+
+            bool isMaxInColumn = true; // Assume it is until proven otherwise
+            for (int k = 0; k < m; k++) {
+                if (matrix[k][x1] > min) {
+                    isMaxInColumn = false;
+                    break;
+                }
+            }
+
+            if (isMaxInColumn) {
+                v.push_back(min);
             }
         }
-        return res;
+
+        return v;
     }
 };

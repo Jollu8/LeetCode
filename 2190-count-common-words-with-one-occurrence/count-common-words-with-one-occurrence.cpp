@@ -1,15 +1,12 @@
 class Solution {
 public:
     int countWords(vector<string>& w1, vector<string>& w2) {
-        unordered_map<string, int> mp1, mp2;
+        unordered_map<string, int> mp;
         for (auto& i : w1)
-            mp1[i]++;
+            mp[i]++;
         for (auto& i : w2)
-            mp2[i]++;
-        int ans{};
-        for (auto& [a, b] : mp1)
-            ans += (mp2[a] == 1 && b == 1) ? 1 : 0;
-
-        return ans;
+            mp[i] = (mp[i] == 1) ? -1 : 0;
+        
+        return count_if(mp.begin(), mp.end(), [](auto &a) {return a.second == -1;});
     }
 };

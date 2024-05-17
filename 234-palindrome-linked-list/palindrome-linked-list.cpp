@@ -10,25 +10,17 @@
  */
 class Solution {
 public:
-    bool isPalindrome(ListNode* h) {
-        auto slow = h;
-        auto fast = h;
-        while(fast && fast->next) {
-            fast = fast->next->next;
-            slow = slow->next;
-        }
-        ListNode* prev = nullptr;
-        while(slow) {
+    bool isPalindrome(ListNode *h) {
+        ListNode *prev = nullptr, *slow = h, *fast = h;
+
+        for (; fast && fast->next; fast = fast->next->next, slow = slow->next);
+        while (slow) {
             swap(prev, slow->next);
             swap(slow, prev);
         }
+        for (; prev && h; prev = prev->next, h = h->next)
+            if (h->val != prev->val) return false;
 
-        while(prev && h) {
-            if(h->val != prev->val) return false;
-            prev = prev->next;
-            h = h->next;
-        }
         return true;
-        
     }
 };

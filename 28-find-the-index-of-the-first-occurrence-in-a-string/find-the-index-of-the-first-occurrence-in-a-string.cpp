@@ -5,7 +5,7 @@ public:
 
         for (int i{}, j = ns - 1; j < h.size(); ++i, ++j) {
             int l{};
-            for (int k = i; k <= j && l < ns && (h[k] == n[l]);  ++k, ++l );
+            for (int k = i; l < ns && (h[k] == n[l]);  ++k, ++l );
             if (l == ns) {
                 ans = i;
                 break;

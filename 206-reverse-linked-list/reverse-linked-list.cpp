@@ -11,7 +11,6 @@
 class Solution {
 public:
     ListNode *reverseList(ListNode *h, ListNode *p = nullptr) {
-        // if (!h) return h;
         for(; h; swap(p, h->next), swap(p, h));
         return p;
     }

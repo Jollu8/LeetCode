@@ -14,11 +14,12 @@ public:
         for (int i = A1.size() - 1; i >= 0; --i) {
             cnt += (A1[i] - '0');
             cnt += (A2[i] - '0');
-            ans = (char)('0' + cnt % 10) + ans;
+            ans += (char)('0' + cnt % 10);
             cnt /= 10;
         }
         if (cnt)
-            ans = (char)('0' + cnt) + ans;
+            ans += (char)('0' + cnt);
+        reverse(ans.begin(), ans.end());
         return ans;
     }
 };

@@ -1,24 +1,16 @@
 class Solution {
 public:
     string addStrings(string A1, string A2) {
-        [&]() {
-            int n = A1.size(), m = A2.size();
-            if (n > m)
-                A2 = string(n - m, '0') + A2;
-            else if (m > n)
-                A1 = string(m - n, '0') + A1;
-        }();
-        string ans;
         int cnt{};
-        ans.reserve(A1.size() + 2);
-        for (int i = A1.size() - 1; i >= 0; --i) {
-            cnt += (A1[i] - '0');
-            cnt += (A2[i] - '0');
-            ans += (char)('0' + cnt % 10);
-            cnt /= 10;
+        string ans;
+        ans.reserve(max(A1.size(), A2.size()) + 2);
+        auto a1 = A1.rbegin();
+        auto a2 = A2.rbegin();
+        for (; a1 != A1.rend() || a2 != A2.rend() || cnt; cnt /= 10) {
+            if(a1 != A1.rend()) cnt += (*a1 - '0'), a1++;
+            if(a2 != A2.rend()) cnt += (*a2 - '0'), a2++;
+            ans += (char) ('0' + cnt % 10);
         }
-        if (cnt)
-            ans += (char)('0' + cnt);
         reverse(ans.begin(), ans.end());
         return ans;
     }

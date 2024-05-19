@@ -5,7 +5,7 @@ public:
         mp[0]++;
         for (int i{}, cnt{}; i < A.size(); ++i) {
             cnt += A[i];
-            if (auto f = mp.find(cnt - k); f != mp.end() && f->second > 0) sum += f->second;
+            if (auto f = mp.find(cnt - k); f != mp.end()) sum += f->second;
             mp[cnt]++;
         }
         return sum;

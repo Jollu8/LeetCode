@@ -1,13 +1,21 @@
-class Solution {    
+class Solution {
+    vector<string> ans;
+    int n;
+
+    void dfs(int i, int j, string tmp) {
+        if (tmp.size() == n * 2)
+            ans.emplace_back(tmp);
+
+        if (i < n)
+            dfs(i + 1, j, tmp + "(");
+        if (j < i)
+            dfs(i, j + 1, tmp + ")");
+    }
+
 public:
     vector<string> generateParenthesis(int n) {
-        vector<string>ans;
-        function<void(int, int, string)> func = [&](int l, int r, string s) {
-            if(s.size() == n *2) ans.emplace_back(s);
-            if(l < n) func(l+1, r, s + "(");
-            if(r < l) func(l, r+1, s + ")");
-        };
-        func(0, 0, "");
+        this->n = n;
+        dfs(0, 0, "");
         return ans;
-     }
+    }
 };

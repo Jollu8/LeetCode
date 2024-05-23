@@ -1,7 +1,6 @@
 class Solution {
 public:
-    void moveZeroes(vector<int> &A) {
-        for(int s{}, f{}; f < A.size(); f = (A[f] ? swap(A[s++], A[f]), f+1 : f+1));
-      
+    void moveZeroes(vector<int>& A, int l = 0, int r = 0) {
+        for(; r < A.size(); r += (A[r]) ? swap(A[l++], A[r]), 1 : 1);
     }
 };

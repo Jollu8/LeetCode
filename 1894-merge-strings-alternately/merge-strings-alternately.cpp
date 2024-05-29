@@ -1,13 +1,15 @@
 class Solution {
 public:
-    string mergeAlternately(string w1, string w2) {
+    string mergeAlternately(string word1, string word2) {
+        int n = word1.size(), m = word2.size(), i{}, j{};
         string ans;
-        ans.reserve(w1.size() + w2.size());
-        auto a = w1.begin(), b = w2.begin();
-
-        while (a != w1.end() && b != w2.end())ans.push_back(*a++), ans.push_back(*b++);
-        while (a != w1.end()) ans.push_back(*a++);
-        while (b != w2.end()) ans.push_back(*b++);
+        ans.reserve(n + m);
+        while(i < n && j < m) {
+            ans += word1[i++];
+            ans += word2[j++];
+        }
+        while(i < n)ans += word1[i++];
+        while(j < m)ans += word2[j++];
 
         return ans;
     }

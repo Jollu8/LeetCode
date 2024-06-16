@@ -19,13 +19,10 @@ public:
         for (; l1 || l2; l1 = l1 ? l1->next : l1, l2 = l2 ? l2->next : l2) {
             cnt += (l1) ? l1->val : 0;
             cnt += (l2) ? l2->val : 0;
-
-            // tmp->next = new ListNode(cnt % 10);
             tmp = tmp->next = new ListNode(cnt % 10);
             cnt /= 10;
         }
-        if (cnt)
-            tmp->next = new ListNode(cnt);
+        tmp->next = cnt ? new ListNode(cnt) : tmp->next;
         return ans->next;
     }
 };

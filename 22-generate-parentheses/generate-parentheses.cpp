@@ -1,21 +1,19 @@
 class Solution {
     vector<string> ans;
     int n;
-
-    void dfs(int i, int j, string tmp) {
-        if (tmp.size() == n * 2)
-            ans.emplace_back(tmp);
-
+    void backtrack(int i, int j, string s) {
+        if (s.size() ==  n * 2)
+            ans.emplace_back(s);
         if (i < n)
-            dfs(i + 1, j, tmp + "(");
+            backtrack(i + 1, j, s + "(");
         if (j < i)
-            dfs(i, j + 1, tmp + ")");
+            backtrack(i, j + 1, s + ")");
     }
 
 public:
     vector<string> generateParenthesis(int n) {
         this->n = n;
-        dfs(0, 0, "");
+        backtrack(0, 0, "");
         return ans;
     }
 };

@@ -1,11 +1,13 @@
 class Solution {
 public:
-    int maxProfit(vector<int>& p) {
-        int stock{};
-        for(int m = p[0], i = 1; i < p.size(); ++i) {
-            stock = max(stock, p[i] - m);
-            m = min(m, p[i]);
+    int maxProfit(vector<int>& A) {
+        vector<int> dp(A.size());
+        dp[0] = 0;
+         int idx = A[0];
+        for(int i = 1; i < A.size(); ++i) {
+            dp[i] = max(dp[i-1], A[i] - idx);
+            idx = min(idx, A[i]);
         }
-        return stock;
+        return dp[A.size()-1];
     }
 };

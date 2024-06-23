@@ -1,7 +1,7 @@
 class Solution {
 public:
-    int longestSubarray(vector<int> &A, int limit) {
-        int ans{}, max_el, min_el, a, b;
+    int longestSubarray(vector<int>& A, int limit) {
+        int ans{};
         multiset<int> mp;
         for (int l{}, r{}; r < A.size(); r++) {
             mp.insert(A[r]);

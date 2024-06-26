@@ -1,42 +1,37 @@
 class Solution {
-public:
-    int n;
-    vector<vector<int>> dp;
+    vector<vector<string>> ans;
 
-    //judge whether s[l..r] is palindrome storing into dp[l][r]
-    inline bool isPalindrome(string& s, int l, int r){
-        if (dp[l][r] != -1){
-            return dp[l][r]==1;
-        }  
-        while (l < r){
-            if (s[l] != s[r]) 
-                return dp[l][r] = 0;     
-            l++;
-            r--;       
+    int n;
+    string s;
+     bool is_valid(int i, int j) {
+
+        for(; i < j; ++i, --j){
+            if (s[i] != s[j])
+                return false;
         }
-        return dp[l][r] = 1;
+        return true;
     }
 
-    // backtracking to find the valid partitions for s[start:]
-    vector<vector<string>> ans;
-    inline void dfs(string &s, int start, vector<string>& valids) {
-        if (start >= n)
-            ans.push_back(valids);
-        for (int end = start; end < n; end++) {
-            if (isPalindrome(s, start, end)) {
-                valids.push_back(s.substr(start, end - start + 1));
-                dfs(s, end+1, valids);
-                valids.pop_back();//backtracking
+     void dfs(int i, vector<string>& dp) {
+        if (i == n)
+            ans.emplace_back(dp);
+
+        for (int end = i; end < n; end++) {
+            if (is_valid(i, end)) {
+                dp.emplace_back(s.substr(i, end - i+1));
+                dfs(end + 1, dp);
+                dp.pop_back();
             }
         }
     }
 
-    vector<vector<string>> partition(string s) {
-        n = s.size();
-        if (n == 1) return {{s}};
-        dp.assign(n, vector<int>(n, -1));
-        vector<string> valids;
-        dfs(s, 0, valids);
+public:
+    vector<vector<string>> partition(string& s) {
+        this->n = s.size();
+        vector<string> dp;
+        
+        this->s = move(s);
+        dfs(0, dp);
         return ans;
     }
 };

@@ -1,26 +1,28 @@
 class Solution {
-public:
     vector<vector<int>> ans;
-    
-    void backtrack(vector<int>& nums, vector<int>& path, int i, int t) {
-        if (!t) {
-            ans.emplace_back(path);
+    vector<int> dp;
+    vector<int> nums;
+
+    void bkg(int ind, int target) {
+        if (ind == nums.size()) {
+            if (!target)
+                ans.emplace_back(dp);
             return;
         }
-        if (i == nums.size() || t - nums[i] < 0)
-            return;
 
-        path.push_back(nums[i]);
-        backtrack(nums, path, i, t - nums[i]);
-        path.pop_back();
-        backtrack(nums, path, i + 1, t);
+        if (nums[ind] <= target) {
+            dp.push_back(nums[ind]);
+            bkg(ind, target - nums[ind]);
+            dp.pop_back();
+        }
+
+        bkg(ind + 1, target);
     }
 
 public:
-    vector<vector<int>> combinationSum(vector<int>& nums, int t) {
-        sort(nums.begin(), nums.end());
-        vector<int> path;
-        backtrack(nums, path, 0, t);
+    vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
+        nums = move(candidates);
+        bkg(0, target);
         return ans;
     }
 };

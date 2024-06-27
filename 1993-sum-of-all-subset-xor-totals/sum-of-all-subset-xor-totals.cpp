@@ -1,18 +1,21 @@
 class Solution {
-    int ans;
-    void backtrack(vector<int> &A, int i , int x){
-        if(i >= A.size()) {
+    int ans{};
+    vector<int> nums;
+
+    void bkg(int ind, int x) {
+        if (ind >= nums.size()) {
             ans += x;
             return;
         }
-        backtrack(A, i+1, x^A[i]);
-        backtrack(A, i+1, x);
 
+        bkg(ind + 1, x ^ nums[ind]);
+        bkg(ind + 1, x);
     }
+
 public:
-    int subsetXORSum(vector<int>& A) {
-        ans = 0;
-        backtrack(A, 0,0);
+    int subsetXORSum(vector<int>& nums) {
+        this->nums = move(nums);
+        bkg(0, 0);
         return ans;
     }
 };

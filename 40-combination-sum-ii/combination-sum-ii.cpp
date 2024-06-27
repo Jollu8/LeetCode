@@ -8,13 +8,13 @@ class Solution {
             ans.emplace_back(dp);
             return;
         }
-        // if(nums[ind] > target) return;
+        if(ind < nums.size() && nums[ind] > target ) return;
         for (int i = ind; i < nums.size(); ++i) {
             if (i > ind && nums[i] == nums[i - 1])
                 continue;
 
-            if (nums[i] > target)
-                break;
+            // if (nums[i] > target)
+            //     break;
 
             dp.push_back(nums[i]);
             bkg(i + 1, target - nums[i]);

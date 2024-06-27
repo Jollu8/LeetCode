@@ -10,6 +10,7 @@ class Solution {
             return;
         }
 
+        if(target < 0) return;
         if (nums[ind] <= target) {
             dp.push_back(nums[ind]);
             bkg(ind, target - nums[ind]);

@@ -1,26 +1,25 @@
 class Solution {
-    vector<vector< int>> ans;
-    void backtrack(vector<int> &nums,  vector<int> &cur, unordered_set<int> &np) {
-        if(cur.size() == nums.size()) {
-            ans.emplace_back(cur);
+    vector<vector<int>> ans;
+    vector<int> nums;
+
+    void dfs(int ind) {
+        if (ind == nums.size()) {
+            ans.emplace_back(nums);
             return;
         }
 
-        for(int i = 0; i < nums.size(); ++i) {
-            if(!np.contains(nums[i])) {
-                np.insert(nums[i]);
-                cur.emplace_back(nums[i]);
-                backtrack(nums,  cur, np);
-                np.erase(cur.back());
-                cur.pop_back();
-            }
+        for (int i = ind; i < nums.size(); ++i) {
+            swap(nums[i], nums[ind]);
+            dfs(ind + 1);
+
+            swap(nums[i], nums[ind]);
         }
     }
+
 public:
-    vector<vector<int>> permute(vector<int>& nums) {
-        vector<int> cur;
-        unordered_set<int> np;
-        backtrack(nums, cur, np);
+    vector<vector<int>> permute(vector<int>& A) {
+        this->nums = move(A);
+        dfs(0);
         return ans;
     }
 };

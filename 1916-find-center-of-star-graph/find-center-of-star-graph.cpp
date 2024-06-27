@@ -1,6 +1,7 @@
 class Solution {
 public:
-    int findCenter(vector<vector<int>>& edges) {
-        return edges[0][0] == edges[1][0] || edges[0][0] == edges[1][1] ? edges[0][0] : edges[0][1]; 
+    int findCenter(vector<vector<int>>& G) {
+        int x = x = G[0][0];
+        return x == G[1][0] || x == G[1][1] ? x : G[0][1]; 
     }
 };

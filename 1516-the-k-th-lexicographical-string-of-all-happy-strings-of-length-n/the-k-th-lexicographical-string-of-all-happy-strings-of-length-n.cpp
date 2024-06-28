@@ -10,18 +10,19 @@ class Solution {
             return;
         }
         for (auto c : dex) {
-            if(dp.empty() || dp.back() != c){
+            if (dp.empty() || dp.back() != c) {
                 dp.push_back(c);
-                bkg( n, k);
+                bkg(n, k);
                 dp.pop_back();
             }
+            if (!k)
+                break;
         }
     }
 
 public:
     string getHappyString(int n, int k) {
-        char ch = 'd';
-        bkg( n, k);
+        bkg(n, k);
         return ans;
     }
 };

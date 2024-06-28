@@ -1,27 +1,30 @@
 class Solution {
-    string ans;
+    string ans, dp;
     vector<char> dex{'a', 'b', 'c'};
 
-    int bkg(int n, int k, string dp) {
+    void bkg(char x, int n, int& k) {
+
         if (dp.size() == n) {
-            if (--k == 0) {
+
+            if (--k == 0)
                 ans = dp;
-                return 0;
-            }
 
-            return k;
+            return;
         }
-
-        for (auto c : dex) {
-            if (dp.empty() || dp.back() != c) {
-                k = bkg(n, k, dp + c);
-                if (!k)
-                    return 0;
+        for (int i = 0; i <= 2 && k; i++) {
+            if (dex[i] != x) {
+                dp.push_back(dex[i]);
+                bkg(dex[i], n, k);
+                dp.pop_back();
             }
+      
         }
-        return k;
     }
 
 public:
-    string getHappyString(int n, int k) { return bkg(n, k, "") ? "" : ans; }
+    string getHappyString(int n, int k) {
+        char ch = 'd';
+        bkg(ch, n, k);
+        return ans;
+    }
 };

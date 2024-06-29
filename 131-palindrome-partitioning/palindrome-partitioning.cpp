@@ -1,37 +1,39 @@
 class Solution {
+    string s;
+    vector<string> dp;
     vector<vector<string>> ans;
 
-    int n;
-    string s;
-     bool is_valid(int i, int j) {
-
-        for(; i < j; ++i, --j){
-            if (s[i] != s[j])
+    bool is_valid(int l, int r) {
+        while (l < r) {
+            if (s[l] != s[r])
                 return false;
+            ++l;
+            --r;
         }
         return true;
     }
 
-     void dfs(int i, vector<string>& dp) {
-        if (i == n)
+    void bkg(int ind, int n) {
+        if (ind == n) {
             ans.emplace_back(dp);
+            return;
+        }
 
-        for (int end = i; end < n; end++) {
-            if (is_valid(i, end)) {
-                dp.emplace_back(s.substr(i, end - i+1));
-                dfs(end + 1, dp);
+        for (int i = ind; i < n; ++i) {
+            if (is_valid(ind, i)) {
+
+                dp.push_back(s.substr(ind, i - ind + 1));
+                bkg(i + 1, n);
                 dp.pop_back();
             }
         }
     }
 
 public:
-    vector<vector<string>> partition(string& s) {
-        this->n = s.size();
-        vector<string> dp;
-        
+    vector<vector<string>> partition(string s) {
+        int n = s.size();
         this->s = move(s);
-        dfs(0, dp);
+        bkg(0, n);
         return ans;
     }
 };

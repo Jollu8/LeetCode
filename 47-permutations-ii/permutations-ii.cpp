@@ -1,28 +1,29 @@
 class Solution {
     vector<vector<int>> ans;
-    unordered_map<int, int> mp;
     vector<int> nums;
-    void dfs(vector<int> &dp) {
-        if(dp.size() == nums.size()) {
-            ans.emplace_back(dp);
+
+    void bkg(int ind) {
+        if (ind == nums.size() - 1) {
+            ans.emplace_back(nums);
             return;
         }
 
-        for(auto &[a, freq] : mp) {
-            if(!freq) continue ;
-            --freq;
-            dp.push_back(a);
-            dfs(dp);
-            dp.pop_back();
-            ++freq;
+        unordered_set<int> np;
+
+        for (int i = ind; i < nums.size(); ++i) {
+            if (!np.contains(nums[i])) {
+                swap(nums[i], nums[ind]);
+                bkg(ind + 1);
+                swap(nums[i], nums[ind]);
+                np.insert(nums[i]);
+            }
         }
     }
+
 public:
-    vector<vector<int>> permuteUnique(vector<int>& A) {
-        for(auto i  : A) mp[i]++;
-        this->nums = move(A);
-        vector<int> dp;
-        dfs( dp);
+    vector<vector<int>> permuteUnique(vector<int>& nums) {
+        this->nums = move(nums);
+        bkg(0);
         return ans;
     }
 };

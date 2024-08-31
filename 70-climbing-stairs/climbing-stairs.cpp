@@ -5,8 +5,8 @@ class Solution {
         if(n <= 1) return 1;
         if(mp.contains(n)) return mp[n];
 
-        mp[n] =  f(n-1) + f(n-2);
-        return mp[n];
+        return mp[n] =  f(n-1) + f(n-2);
+        
     }
 
 public:

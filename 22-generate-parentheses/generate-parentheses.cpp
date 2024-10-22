@@ -1,19 +1,23 @@
 class Solution {
-    vector<string> ans;
-    int n;
-    void backtrack(int i, int j, string s) {
-        if (s.size() ==  n * 2)
-            ans.emplace_back(s);
-        if (i < n)
-            backtrack(i + 1, j, s + "(");
-        if (j < i)
-            backtrack(i, j + 1, s + ")");
-    }
+    vector<std::string> ans;
 
+
+    void bctr(int n, int l, int r, string cur) {
+        if(n * 2 == cur.size()) {
+            ans.emplace_back(move(cur));
+            return;
+        }
+
+        if(l < n){
+            bctr(n, l + 1, r, cur + '(');
+        }
+        if(r < l) {
+            bctr(n, l, r + 1, cur + ')');
+        }
+    }
 public:
     vector<string> generateParenthesis(int n) {
-        this->n = n;
-        backtrack(0, 0, "");
+        bctr(n, 0, 0, "");
         return ans;
     }
 };

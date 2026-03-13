@@ -10,7 +10,7 @@ class Solution:
                 if total >= mountainHeight:
                     return True
 
-        l, r = 1, 5000050000000001
+        l, r = 1, 5000050000000000
 
         while l < r:
             mid = (l + r) // 2

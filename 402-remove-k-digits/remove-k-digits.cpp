@@ -1,34 +1,32 @@
 class Solution {
 public:
-    std::string removeKdigits(std::string num, int k) {
-        std::stack<char> stack;
+    string removeKdigits(string num, int k) {
+        std::stack<char> mstack;
         
-        for (char digit : num) {
-            while (!stack.empty() && k > 0 && stack.top() > digit) {
-                stack.pop();
-                k--;
+        for (char ch: num) {
+            while(not mstack.empty() and k > 0 and mstack.top() > ch) {
+                mstack.pop();
+                --k;
             }
-            stack.push(digit);
+            mstack.push(ch);
+         }
+
+
+        while (k > 0 and not mstack.empty()) {
+            mstack.pop();
+            --k;
         }
-        
-        // Remove remaining k digits from the end of the stack
-        while (k > 0 && !stack.empty()) {
-            stack.pop();
-            k--;
+
+        std::string ans;
+        ans.reserve(mstack.size());
+
+        while(not mstack.empty()) {
+            ans += mstack.top();
+            mstack.pop();
         }
-        
-        // Construct the resulting string from the stack
-        std::string result;
-        while (!stack.empty()) {
-            result += stack.top();
-            stack.pop();
-        }
-        std::reverse(result.begin(), result.end()); // Reverse to get the correct order
-        
-        // Remove leading zeros
-        size_t pos = result.find_first_not_of('0');
-        result = (pos == std::string::npos) ? "0" : result.substr(pos);
-        
-        return result;
+
+        std::reverse(ans.begin(), ans.end());
+        auto npos = ans.find_first_not_of("0");
+        return npos == std::string::npos ? "0" : ans.substr(npos);
     }
 };
